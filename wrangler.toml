@@ -1,0 +1,13 @@
+name = "universal-template"
+pages_build_output_dir = "dist"
+
+# Build command: pnpm build:web  (expo export --platform web)
+# Output dir:    dist/
+#
+# Cloudflare Pages dashboard settings:
+#   Build command:    pnpm build:web
+#   Build output dir: dist
+#   Root directory:   /  (leave empty)
+#
+# Environment variables (set in Pages dashboard, not here):
+#   EXPO_PUBLIC_CONVEX_URL = https://your-deployment.convex.cloud
