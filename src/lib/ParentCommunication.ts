@@ -64,12 +64,17 @@ export function initParentCommunication(): void {
   });
 
   // ── Expo / Metro HMR monitoring ───────────────────────────────────────────
+  // module.hot exists in Metro web builds but addStatusHandler may not be
+  // present in all environments (e.g. WebContainers). Guard before calling.
   // @ts-ignore
   if (typeof module !== 'undefined' && module.hot) {
     // @ts-ignore
-    module.hot.addStatusHandler((status: string) => {
-      window.parent.postMessage({ type: 'EXPO_HMR', event: status }, '*');
-    });
+    if (typeof module.hot.addStatusHandler === 'function') {
+      // @ts-ignore
+      module.hot.addStatusHandler((status: string) => {
+        window.parent.postMessage({ type: 'EXPO_HMR', event: status }, '*');
+      });
+    }
     window.parent.postMessage({ type: 'EXPO_HMR', event: 'hmrModuleLoaded' }, '*');
   } else {
     window.parent.postMessage({ type: 'EXPO_HMR', event: 'hmrNotAvailable' }, '*');
